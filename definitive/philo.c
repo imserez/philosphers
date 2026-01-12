@@ -184,6 +184,15 @@ int free_all(t_ctx **ctx, pthread_mutex_t **forks, p_philo **ph)
     return (1);
 }
 
+void join_threads(p_philo *ph, int num)
+{
+  while (num > 0)
+  {
+    pthread_join(philos[num - 1].pth_id, NULL);
+    num--;
+  }
+}
+
 int main(int argc, char **argv)
 {
     t_ctx *ctx;
@@ -199,4 +208,6 @@ int main(int argc, char **argv)
     if (!init_threads(ctx, &ph, forks))
         return (free_all(&ctx, &forks, &ph));
     monitor_threads(ph, forks, ctx);
+    join_threads(ph, ctx->philos);
+    free_all(&ctx, &forks, &ph);
 }
