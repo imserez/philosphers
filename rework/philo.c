@@ -37,6 +37,8 @@ int main(int argc, char **argv)
     ctx.beg_time = get_timestamp();
     if (!init_forks(&ctx, &forks));
         return (1);
+
+        
     if (!init_threads(ctx, philos))
         return (safe_exit_ret(&ctx, &philos))
 }
