@@ -27,14 +27,14 @@ static int do_eat(p_philo *ph)
   usleep(ph->eat_ms * 1000);
   pthread_mutex_unlock(ph->fork2);
   pthread_mutex_unlock(ph->fork1);
-  return (sim_finished(ph));
+  return (0);
 }
 
 static int do_sleep(p_philo *ph)
 {
   safe_print(ph, "is sleeping");
   usleep(ph->sleep_ms * 1000);
-  return (sim_finished(ph));
+  return (0);
 }
 
 void *philo_routine(void *data)

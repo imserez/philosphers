@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     if (!ctx)
         return (1);
     if (!validate_input(ctx, argc))
-        return (1);
+        return (free_ctx(&ctx));
     ctx->begin_time = get_timestamp();
     if (!init_forks(ctx, &forks))
         return(free_ctx(&ctx));
