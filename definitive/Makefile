@@ -1,5 +1,5 @@
 CFLAGS= -Wall -Werror -Wextra
-CC=CC
+CC= cc
 NAME=philo
 SRCS= ft_atoi.c ft_utils.c monitor_routine.c philo.c
 OBJS= $(SRCS:.c=.o)
@@ -13,7 +13,8 @@ $(NAME): $(OBJS)
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-clean: rm -f ($OBJS)
+clean: 
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)

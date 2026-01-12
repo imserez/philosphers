@@ -118,6 +118,7 @@ int free_philos(p_philo **ph, int size, int mutex)
         else if (i != size - 1)
             pthread_mutex_destroy(&(*ph)[i].ph_data_tx);
     }
+    return (1);
 }
 
 static int philo_init_pipeline(int i, t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
@@ -142,7 +143,6 @@ static int philo_init_pipeline(int i, t_ctx *ctx, p_philo **ph, pthread_mutex_t 
 
 int init_philo_data(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
 {
-    int created;
     int i;
 
     i = -1;
@@ -152,8 +152,9 @@ int init_philo_data(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
         (*ph)[i].sleep_ms = ctx->tts;         
         (*ph)[i].eat_ms = ctx->tte;
         (*ph)[i].eat_time = get_timestamp();
-        (*ph)[i].begin = ctx->beg_time;
+        (*ph)[i].begin = ctx->begin_time;
         (*ph)[i].ph_num = i; 
+        (*ph)[i].die_ms = ctx->ttd; 
         (*ph)[i].num_eats = 0;
         (*ph)[i].write = &ctx->write;
         (*ph)[i].stop_lock = &ctx->stop_lock;
@@ -173,22 +174,23 @@ int init_threads(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
         return (0);
     if (!init_philo_data(ctx, ph, forks))
         return (0);
+    return (1);
 }
 
 int free_all(t_ctx **ctx, pthread_mutex_t **forks, p_philo **ph)
 {
     (*ctx)->finish_simulation = 1;
-    free_forks(forks, ctx->philos);
-    free_philos(ph, ctx->philos, 0);
+    free_forks(forks, (*ctx)->philos);
+    free_philos(ph, (*ctx)->philos, 0);
     free_ctx(ctx);
     return (1);
 }
 
-void join_threads(p_philo *ph, int num)
+void join_threads(p_philo *phs, int num)
 {
   while (num > 0)
   {
-    pthread_join(philos[num - 1].pth_id, NULL);
+    pthread_join(phs[num - 1].pth_id, NULL);
     num--;
   }
 }
@@ -207,7 +209,7 @@ int main(int argc, char **argv)
         return(free_ctx(&ctx));
     if (!init_threads(ctx, &ph, forks))
         return (free_all(&ctx, &forks, &ph));
-    monitor_threads(ph, forks, ctx);
+    monitor_threads(ph, ctx);
     join_threads(ph, ctx->philos);
     free_all(&ctx, &forks, &ph);
 }

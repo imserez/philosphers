@@ -6,6 +6,8 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+# include <stdio.h>
+
 typedef struct s_philo
 {
   pthread_t pth_id;
@@ -21,6 +23,7 @@ typedef struct s_philo
   long begin;
   long sleep_ms;
   long eat_ms;
+  long die_ms;
   int num_eats;
 
 } p_philo;
@@ -51,21 +54,19 @@ int	ft_isprint(int c);
 
 //monitor_routine
 void safe_print(p_philo *ph, char *msg);
-void stop_sim(p_philo *phs, t_ctx *ctx);
+void stop_sim(t_ctx *ctx);
 int is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats);
 int sim_finished(p_philo *ph);
 void *philo_routine(void *data);
-void monitor_threads(p_philo *phs, pthread_mutex_t *forks, t_ctx *ctx);
+void monitor_threads(p_philo *phs, t_ctx *ctx);
 
 //philo.c
 int free_ctx(t_ctx **ctx);
 int free_forks(pthread_mutex_t **forks, int num);
-static void parse_arg_values(int argc, char **argv, t_ctx *ctx);
 t_ctx *init_context(int argc, char **argv);
 long get_timestamp(void);
 int init_forks(t_ctx *ctx, pthread_mutex_t **forks);
 int free_philos(p_philo **ph, int size, int mutex);
-static int philo_init_pipeline(int i, t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks);
 int init_philo_data(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks);
 int init_threads(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks);
 int free_all(t_ctx **ctx, pthread_mutex_t **forks, p_philo **ph);

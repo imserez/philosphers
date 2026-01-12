@@ -7,7 +7,7 @@ void safe_print(p_philo *ph, char *msg)
 
     pthread_mutex_lock(ph->write);
     pthread_mutex_lock(ph->stop_lock);
-    if (!(*ph->stop_simulation))
+    if (!(*ph->finish_simulation))
     {
         time = get_timestamp() - ph->begin;
         // write(1, msg, ft_strlen(msg));
@@ -18,7 +18,7 @@ void safe_print(p_philo *ph, char *msg)
 
 }
 
-void stop_sim(p_philo *phs, t_ctx *ctx)
+void stop_sim(t_ctx *ctx)
 {
   pthread_mutex_lock(&ctx->stop_lock);
   ctx->finish_simulation = 1;
@@ -36,7 +36,7 @@ int is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats)
     if (get_timestamp() - last_eat_time > ctx->ttd)
     {
         safe_print(&phs[i], "died");
-        stop_sim(phs, ctx);
+        stop_sim(ctx);
         return (0);
     }
     return (1);
@@ -53,11 +53,8 @@ int sim_finished(p_philo *ph)
 void *philo_routine(void *data)
 {
     p_philo *ph;
-    int eat;
-    int stop;
     ph = (p_philo *)data;
 
-    stop = 0;
     while (1)
     {
         if (sim_finished(ph))
@@ -67,7 +64,7 @@ void *philo_routine(void *data)
             safe_print(ph, "has taken a fork");
             if (ph->fork1 == ph->fork2)
             {
-                usleep(ph->ttd * 1000);
+                usleep(ph->die_ms * 1000);
                 pthread_mutex_unlock(ph->fork1);
                 return (NULL);
             }
@@ -96,7 +93,7 @@ void *philo_routine(void *data)
 }
 
 
-void monitor_threads(p_philo *phs, pthread_mutex_t *forks, t_ctx *ctx)
+void monitor_threads(p_philo *phs, t_ctx *ctx)
 {
     int i;
     int full_eat;
@@ -115,7 +112,7 @@ void monitor_threads(p_philo *phs, pthread_mutex_t *forks, t_ctx *ctx)
         }
         if (full_eat == ctx->philos)
         {
-            stop_sim(phs, ctx);
+            stop_sim(ctx);
             return ;
         }
         usleep(1000);
