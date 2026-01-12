@@ -56,7 +56,7 @@ void *philo_routine(void *data)
             {
               if (do_eat(ph))
                 return (NULL);
-              if (do_sleep(ph));
+              if (do_sleep(ph))
                 return (NULL);
               safe_print(ph, "is thinking");
             }

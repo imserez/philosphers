@@ -43,34 +43,36 @@ typedef struct s_ctx
   pthread_mutex_t stop_lock;
 } t_ctx;
 
-//ft_atoi
+// ft_atoi
 int	ft_atoi(const char *nptr);
 
-//ft_utils
+// ft_utils
 size_t	ft_strlen(const char *s);
 int	ft_isdigit(int c);
 int	ft_isalpha(int c);
 int	ft_isprint(int c);
 
-//monitor_routine
-void safe_print(p_philo *ph, char *msg);
-void stop_sim(t_ctx *ctx);
-int is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats);
+// threads_monitor
 void monitor_threads(p_philo *phs, t_ctx *ctx);
 
-//philo.c
-int free_ctx(t_ctx **ctx);
-int free_forks(pthread_mutex_t **forks, int num);
+// philo.c
+void safe_print(p_philo *ph, char *msg);
 t_ctx *init_context(int argc, char **argv);
 long get_timestamp(void);
-int init_forks(t_ctx *ctx, pthread_mutex_t **forks);
-int free_philos(p_philo **ph, int size, int mutex);
+
+
+// init_philo.c
 int init_philo_data(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks);
 int init_threads(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks);
-int free_all(t_ctx **ctx, pthread_mutex_t **forks, p_philo **ph);
+int init_forks(t_ctx *ctx, pthread_mutex_t **forks);
 
-//threads_routine.c
-// int sim_finished(p_philo *ph);
+// threads_routine.c
 void *philo_routine(void *data);
+
+// free_memory.c
+int free_philos(p_philo **ph, int size, int mutex);
+int free_forks(pthread_mutex_t **forks, int num);
+int free_ctx(t_ctx **ctx);
+int free_all(t_ctx **ctx, pthread_mutex_t **forks, p_philo **ph);
 
 #endif

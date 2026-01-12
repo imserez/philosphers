@@ -1,7 +1,7 @@
 CFLAGS= -Wall -Werror -Wextra
 CC= cc
 NAME=philo
-SRCS= ft_atoi.c ft_utils.c monitor_routine.c philo.c
+SRCS= ft_atoi.c ft_utils.c threads_monitor.c philo.c threads_routine.c free_memory.c init_philo.c
 OBJS= $(SRCS:.c=.o)
 INCS= philo.h
 
@@ -13,7 +13,7 @@ $(NAME): $(OBJS)
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-clean: 
+clean:
 	rm -f $(OBJS)
 
 fclean: clean

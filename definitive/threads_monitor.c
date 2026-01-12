@@ -1,24 +1,7 @@
 #include "philo.h"
 
 
-void safe_print(p_philo *ph, char *msg)
-{
-    long time;
-
-    pthread_mutex_lock(ph->write);
-    pthread_mutex_lock(ph->stop_lock);
-    if (!(*ph->finish_simulation))
-    {
-        time = get_timestamp() - ph->begin;
-        // write(1, msg, ft_strlen(msg));
-        printf("%ld %d %s\n", time, ph->ph_num + 1, msg);
-    }
-    pthread_mutex_unlock(ph->stop_lock);
-    pthread_mutex_unlock(ph->write);
-
-}
-
-void stop_sim(t_ctx *ctx)
+static void stop_sim(t_ctx *ctx)
 {
   pthread_mutex_lock(&ctx->stop_lock);
   ctx->finish_simulation = 1;
@@ -43,9 +26,7 @@ static void safe_dead_print(p_philo *ph, char *msg)
 
 }
 
-
-
-int is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats)
+static int is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats)
 {
     long last_eat_time;
 
