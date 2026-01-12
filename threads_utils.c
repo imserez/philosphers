@@ -1,7 +1,16 @@
 #include "philo.h"
 
+
+
 int do_eat(p_philo *ph)
 {
+  pthread_mutex_lock(ph->fork1);
+  if (safe_print(ph, "has taken a fork"))
+  {
+    pthread_mutex_unlock(ph->fork1);
+    return (0);
+  }
+  pthread_mutex_lock(ph->fork2);
   if (safe_print(ph, "has taken a fork"))
   {
     pthread_mutex_unlock(ph->fork2);

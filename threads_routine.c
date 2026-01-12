@@ -39,13 +39,6 @@ void *philo_routine(void *data)
       ft_usleep(ph->eat_ms / 10, ph);
     while (!sim_finished(ph))
     {
-      pthread_mutex_lock(ph->fork1);
-      if (safe_print(ph, "has taken a fork"))
-      {
-        pthread_mutex_unlock(ph->fork1);
-        return (NULL);
-      }
-      pthread_mutex_lock(ph->fork2);
       if (!do_eat(ph))
         return (NULL);
       if (!do_sleep(ph))
