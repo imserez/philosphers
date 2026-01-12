@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int sim_finished(p_philo *ph)
+static int sim_finished(p_philo *ph)
 {
     int finished;
     pthread_mutex_lock(ph->stop_lock);
@@ -9,6 +9,12 @@ int sim_finished(p_philo *ph)
     return (finished);
 }
 
+static void *lonely_philo(p_philo *ph)
+{
+  usleep(ph->die_ms * 1000);
+  pthread_mutex_unlock(ph->fork1);
+  return (NULL);
+}
 
 void *philo_routine(void *data)
 {
@@ -24,11 +30,7 @@ void *philo_routine(void *data)
         {
             safe_print(ph, "has taken a fork");
             if (ph->fork1 == ph->fork2)
-            {
-                usleep(ph->die_ms * 1000);
-                pthread_mutex_unlock(ph->fork1);
-                return (NULL);
-            }
+              return (lonely_philo(ph));
             if (pthread_mutex_lock(ph->fork2) == 0)
             {
                 safe_print(ph, "has taken a fork");

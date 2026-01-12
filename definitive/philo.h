@@ -56,8 +56,6 @@ int	ft_isprint(int c);
 void safe_print(p_philo *ph, char *msg);
 void stop_sim(t_ctx *ctx);
 int is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats);
-int sim_finished(p_philo *ph);
-void *philo_routine(void *data);
 void monitor_threads(p_philo *phs, t_ctx *ctx);
 
 //philo.c
@@ -72,5 +70,7 @@ int init_threads(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks);
 int free_all(t_ctx **ctx, pthread_mutex_t **forks, p_philo **ph);
 
 //threads_routine.c
+// int sim_finished(p_philo *ph);
+void *philo_routine(void *data);
 
 #endif
