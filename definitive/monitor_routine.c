@@ -25,22 +25,25 @@ void stop_sim(t_ctx *ctx)
   pthread_mutex_unlock(&ctx->stop_lock);
 }
 
-int is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats)
+static void safe_dead_print(p_philo *ph, char *msg)
 {
-    long last_eat_time;
+    long time;
 
-    pthread_mutex_lock(&phs[i].ph_data_tx);
-    last_eat_time = phs[i].eat_time;
-    *num_eats = phs[i].num_eats;
-    pthread_mutex_unlock(&phs[i].ph_data_tx);
-    if (get_timestamp() - last_eat_time > ctx->ttd)
+    pthread_mutex_lock(ph->write);
+    pthread_mutex_lock(ph->stop_lock);
+    if (!(*ph->finish_simulation))
     {
-        safe_print(&phs[i], "died");
-        stop_sim(ctx);
-        return (0);
+        time = get_timestamp() - ph->begin;
+        // write(1, msg, ft_strlen(msg));
+        printf("%ld %d %s\n", time, ph->ph_num + 1, msg);
+        *ph->finish_simulation = 1;
     }
-    return (1);
+    pthread_mutex_unlock(ph->stop_lock);
+    pthread_mutex_unlock(ph->write);
+
 }
+
+
 
 int sim_finished(p_philo *ph)
 {
@@ -55,6 +58,7 @@ void *philo_routine(void *data)
     p_philo *ph;
     ph = (p_philo *)data;
 
+    ph->eat_time = get_timestamp();
     while (1)
     {
         if (sim_finished(ph))
@@ -92,6 +96,22 @@ void *philo_routine(void *data)
     return (NULL);
 }
 
+int is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats)
+{
+    long last_eat_time;
+
+    pthread_mutex_lock(&phs[i].ph_data_tx);
+    last_eat_time = phs[i].eat_time;
+    *num_eats = phs[i].num_eats;
+    pthread_mutex_unlock(&phs[i].ph_data_tx);
+    if (get_timestamp() - last_eat_time > ctx->ttd)
+    {
+        safe_dead_print(&phs[i], "died");
+        stop_sim(ctx);
+        return (0);
+    }
+    return (1);
+}
 
 void monitor_threads(p_philo *phs, t_ctx *ctx)
 {
