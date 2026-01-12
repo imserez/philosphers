@@ -71,4 +71,6 @@ int init_philo_data(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks);
 int init_threads(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks);
 int free_all(t_ctx **ctx, pthread_mutex_t **forks, p_philo **ph);
 
+//threads_routine.c
+
 #endif
