@@ -1,17 +1,5 @@
 #include "philo.h"
 
-static void parse_arg_values(int argc, char **argv, t_ctx *ctx)
-{
-    ctx->philos = ft_atoi(argv[1]);
-    ctx->ttd = ft_atoi(argv[2]);
-    ctx->tte = ft_atoi(argv[3]);
-    ctx->tts = ft_atoi(argv[4]);
-    ctx->eat_times = -1;
-    ctx->finish_simulation = 0;
-    if (argc == 6)
-        ctx->eat_times = ft_atoi(argv[5]);
-}
-
 static int philo_init_pipeline(int i, t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
 {
     int created;
@@ -30,6 +18,16 @@ static int philo_init_pipeline(int i, t_ctx *ctx, p_philo **ph, pthread_mutex_t 
     }
     created = pthread_create(&((*ph)[i]).pth_id, NULL, philo_routine, &((*ph)[i]));
     return (!created);
+}
+
+int init_threads(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
+{
+    *ph = (p_philo *)malloc(sizeof(p_philo) * ctx->philos);
+    if (!(*ph))
+        return (0);
+    if (!init_philo_data(ctx, ph, forks))
+        return (0);
+    return (1);
 }
 
 int init_forks(t_ctx *ctx, pthread_mutex_t **forks)
@@ -53,31 +51,6 @@ int init_forks(t_ctx *ctx, pthread_mutex_t **forks)
         }
     }
     return (1);
-}
-
-t_ctx *init_context(int argc, char **argv)
-{
-    t_ctx *ctx;
-
-    if (!argv || (argc != 5 && argc != 6))
-    {
-        write(1, "Syntax is: <num_philos> <time_die> <time_eat> <time_sleep> [num_eats]\n", 70);
-        return (NULL);
-    }
-    ctx = (t_ctx *)malloc(sizeof(t_ctx));
-    if (ctx)
-    {
-        ctx->write_init = 0;
-        ctx->stop_lock_init = 0;
-        if (pthread_mutex_init(&ctx->write, NULL) != 0)
-            return (free_ctx(&ctx), NULL);
-        ctx->write_init = 1;
-        if (pthread_mutex_init(&ctx->stop_lock, NULL) != 0)
-            return (free_ctx(&ctx), NULL);
-        ctx->stop_lock_init = 1;
-        parse_arg_values(argc, argv, ctx);
-    }
-    return (ctx);
 }
 
 int init_philo_data(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)

@@ -30,16 +30,6 @@ void safe_print(p_philo *ph, char *msg)
 
 }
 
-int init_threads(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
-{
-    *ph = (p_philo *)malloc(sizeof(p_philo) * ctx->philos);
-    if (!(*ph))
-        return (0);
-    if (!init_philo_data(ctx, ph, forks))
-        return (0);
-    return (1);
-}
-
 void join_threads(p_philo *phs, int num)
 {
   while (num > 0)
@@ -57,6 +47,8 @@ int main(int argc, char **argv)
 
     ctx = init_context(argc, argv);
     if (!ctx)
+        return (1);
+    if (!validate_input(ctx, argc))
         return (1);
     ctx->begin_time = get_timestamp();
     if (!init_forks(ctx, &forks))

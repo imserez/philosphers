@@ -43,23 +43,25 @@ typedef struct s_ctx
   pthread_mutex_t stop_lock;
 } t_ctx;
 
-// ft_atoi
+// parse_input.c
+t_ctx *init_context(int argc, char **argv);
+int validate_input(t_ctx *ctx, int argc);
+
+// ft_atoi.c
 int	ft_atoi(const char *nptr);
 
-// ft_utils
+// ft_utils.c
 size_t	ft_strlen(const char *s);
 int	ft_isdigit(int c);
 int	ft_isalpha(int c);
 int	ft_isprint(int c);
 
-// threads_monitor
+// threads_monitor.c
 void monitor_threads(p_philo *phs, t_ctx *ctx);
 
 // philo.c
 void safe_print(p_philo *ph, char *msg);
-t_ctx *init_context(int argc, char **argv);
 long get_timestamp(void);
-
 
 // init_philo.c
 int init_philo_data(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks);
