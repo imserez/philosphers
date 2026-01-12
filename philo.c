@@ -14,20 +14,22 @@ long get_timestamp(void)
   return (mstime);
 }
 
-void safe_print(p_philo *ph, char *msg)
+int safe_print(p_philo *ph, char *msg)
 {
     long time;
+    int stop;
 
     pthread_mutex_lock(ph->write);
     pthread_mutex_lock(ph->stop_lock);
-    if (!(*ph->finish_simulation))
+    stop = *ph->finish_simulation;
+    if (!stop)
     {
         time = get_timestamp() - ph->begin;
         printf("%ld %d %s\n", time, ph->ph_num + 1, msg);
     }
     pthread_mutex_unlock(ph->stop_lock);
     pthread_mutex_unlock(ph->write);
-
+    return (stop);
 }
 
 void join_threads(p_philo *phs, int num)

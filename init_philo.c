@@ -66,6 +66,7 @@ int init_philo_data(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
         (*ph)[i].eat_time = get_timestamp();
         (*ph)[i].begin = ctx->begin_time;
         (*ph)[i].ph_num = i;
+        (*ph)[i].philos = ctx->philos;
         (*ph)[i].die_ms = ctx->ttd;
         (*ph)[i].num_eats = 0;
         (*ph)[i].write = &ctx->write;

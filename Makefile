@@ -1,7 +1,7 @@
 CFLAGS= -Wall -Werror -Wextra
 CC= cc
 NAME=philo
-SRCS= ft_atoi.c ft_utils.c threads_monitor.c philo.c threads_routine.c free_memory.c init_philo.c parse_input.c
+SRCS= ft_atoi.c ft_utils.c threads_monitor.c philo.c threads_routine.c free_memory.c init_philo.c parse_input.c threads_utils.c
 OBJS= $(SRCS:.c=.o)
 INCS= philo.h
 

@@ -17,7 +17,6 @@ static void safe_dead_print(p_philo *ph, char *msg)
     if (!(*ph->finish_simulation))
     {
         time = get_timestamp() - ph->begin;
-        // write(1, msg, ft_strlen(msg));
         printf("%ld %d %s\n", time, ph->ph_num + 1, msg);
         *ph->finish_simulation = 1;
     }
