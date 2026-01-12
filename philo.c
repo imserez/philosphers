@@ -99,25 +99,25 @@ int init_threads(int ph_num, p_philo **ph, pthread_mutex_t *forks, long begin)
   return (1);
 }
 
-int init_forks(int philos, pthread_mutex_t **forks)
-{
-  int fnum;
-  int i;
-  int created;
+// int init_forks(int philos, pthread_mutex_t **forks)
+// {
+//   int fnum;
+//   int i;
+//   int created;
 
-  fnum = 3;
-  *forks = (pthread_mutex_t *)malloc(fnum * sizeof(pthread_mutex_t));
-  if (!*forks)
-    return 0;
+//   fnum = 3;
+//   *forks = (pthread_mutex_t *)malloc(fnum * sizeof(pthread_mutex_t));
+//   if (!*forks)
+//     return 0;
 
-  i = 0;
-  while (i < fnum)
-  {
-    created = pthread_mutex_init(&((*forks)[i]), NULL);
-    i++;
-  }
-  return (1);
-}
+//   i = 0;
+//   while (i < fnum)
+//   {
+//     created = pthread_mutex_init(&((*forks)[i]), NULL);
+//     i++;
+//   }
+//   return (1);
+// }
 
 
 // needs for ft_atoi!
@@ -221,19 +221,17 @@ void monitor_threads(p_philo *phs, pthread_mutex_t *forks, int num, long starve)
 
 int main(int argc, char **argv)
 {
-  int *count = 0;
   int th_init;
   int mx_init;
   long begin;
-
   p_philo *philosophers;
-
-  begin = get_timestamp();
   pthread_mutex_t *forks;
 
-  mx_init = init_forks(3, &forks);
-  th_init = init_threads(3, &philosophers, forks, begin);
-  monitor_threads(philosophers, forks, 3, 99);
-  join_threads(philosophers, 3);
-  destroy_mtx(philosophers, forks, 3, 3);
+  // begin = get_timestamp();
+
+  // mx_init = init_forks(3, &forks);
+  // th_init = init_threads(3, &philosophers, forks, begin);
+  // monitor_threads(philosophers, forks, 3, 99);
+  // join_threads(philosophers, 3);
+  // destroy_mtx(philosophers, forks, 3, 3);
 }
