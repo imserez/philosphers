@@ -77,6 +77,7 @@ int ft_usleep(size_t milliseconds, p_philo *ph);
 void safe_gap(p_philo *ph);
 int do_sleep(p_philo *ph);
 int do_eat(p_philo *ph);
+int sim_finished(p_philo *ph);
 
 // free_memory.c
 int free_philos(p_philo **ph, int size, int mutex);

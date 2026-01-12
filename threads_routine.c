@@ -9,15 +9,6 @@ static int lonely_philo(p_philo *ph)
   return (0);
 }
 
-static int sim_finished(p_philo *ph)
-{
-    int finished;
-    pthread_mutex_lock(ph->stop_lock);
-    finished = *(ph->finish_simulation);
-    pthread_mutex_unlock(ph->stop_lock);
-    return (finished);
-}
-
 static int prepare_routine(p_philo *ph)
 {
   pthread_mutex_lock(&ph->ph_data_tx);

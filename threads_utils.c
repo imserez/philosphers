@@ -1,7 +1,5 @@
 #include "philo.h"
 
-
-
 int do_eat(p_philo *ph)
 {
   pthread_mutex_lock(ph->fork1);
@@ -34,6 +32,15 @@ int do_sleep(p_philo *ph)
     return (0);
   ft_usleep(ph->sleep_ms, ph);
   return (1);
+}
+
+int sim_finished(p_philo *ph)
+{
+    int finished;
+    pthread_mutex_lock(ph->stop_lock);
+    finished = *(ph->finish_simulation);
+    pthread_mutex_unlock(ph->stop_lock);
+    return (finished);
 }
 
 void safe_gap(p_philo *ph)
