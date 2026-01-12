@@ -16,7 +16,7 @@ static void *lonely_philo(p_philo *ph)
   return (NULL);
 }
 
-static void do_eat(p_philo *ph)
+static int do_eat(p_philo *ph)
 {
   safe_print(ph, "has taken a fork");
   pthread_mutex_lock(&ph->ph_data_tx);
@@ -27,12 +27,14 @@ static void do_eat(p_philo *ph)
   usleep(ph->eat_ms * 1000);
   pthread_mutex_unlock(ph->fork2);
   pthread_mutex_unlock(ph->fork1);
+  return (sim_finished(ph));
 }
 
-static void do_sleep(p_philo *ph)
+static int do_sleep(p_philo *ph)
 {
   safe_print(ph, "is sleeping");
   usleep(ph->sleep_ms * 1000);
+  return (sim_finished(ph));
 }
 
 void *philo_routine(void *data)
@@ -52,11 +54,9 @@ void *philo_routine(void *data)
               return (lonely_philo(ph));
             if (pthread_mutex_lock(ph->fork2) == 0)
             {
-              do_eat(ph);
-              if (sim_finished(ph))
+              if (do_eat(ph))
                 return (NULL);
-              do_sleep(ph);
-              if (sim_finished(ph))
+              if (do_sleep(ph));
                 return (NULL);
               safe_print(ph, "is thinking");
             }
