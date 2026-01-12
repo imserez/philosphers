@@ -55,7 +55,7 @@ int ft_usleep(size_t milliseconds, p_philo *ph)
     {
         if (sim_finished(ph))
             return (1);
-        usleep(500); // Duerme 0.5ms para no saturar la CPU
+        usleep(500);
     }
     return (0);
 }
