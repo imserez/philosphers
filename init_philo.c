@@ -6,13 +6,13 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:39:03 by serez             #+#    #+#             */
-/*   Updated: 2026/01/13 10:39:38 by serez            ###   ########.fr       */
+/*   Updated: 2026/01/13 11:00:07 by serez            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	philo_init_pipeline(int i, t_ctx *ctx, p_philo **ph,
+static int	philo_init_pipeline(int i, t_ctx *ctx, t_philo **ph,
 				pthread_mutex_t *forks)
 {
 	int				created;
@@ -34,9 +34,9 @@ static int	philo_init_pipeline(int i, t_ctx *ctx, p_philo **ph,
 	return (!created);
 }
 
-int	init_threads(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
+int	init_threads(t_ctx *ctx, t_philo **ph, pthread_mutex_t *forks)
 {
-	*ph = (p_philo *)malloc(sizeof(p_philo) * ctx->philos);
+	*ph = (t_philo *)malloc(sizeof(t_philo) * ctx->philos);
 	if (!(*ph))
 		return (0);
 	if (!init_philo_data(ctx, ph, forks))
@@ -67,7 +67,7 @@ int	init_forks(t_ctx *ctx, pthread_mutex_t **forks)
 	return (1);
 }
 
-int	init_philo_data(t_ctx *ctx, p_philo **ph, pthread_mutex_t *forks)
+int	init_philo_data(t_ctx *ctx, t_philo **ph, pthread_mutex_t *forks)
 {
 	int	i;
 

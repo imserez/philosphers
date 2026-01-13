@@ -6,7 +6,7 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:48:59 by serez             #+#    #+#             */
-/*   Updated: 2026/01/13 10:49:00 by serez            ###   ########.fr       */
+/*   Updated: 2026/01/13 10:59:17 by serez            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	stop_sim(t_ctx *ctx)
 	pthread_mutex_unlock(&ctx->stop_lock);
 }
 
-static void	safe_dead_print(p_philo *ph, char *msg)
+static void	safe_dead_print(t_philo *ph, char *msg)
 {
 	long	time;
 
@@ -35,7 +35,7 @@ static void	safe_dead_print(p_philo *ph, char *msg)
 	pthread_mutex_unlock(ph->write);
 }
 
-static int	is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats)
+static int	is_alive(t_philo *phs, t_ctx *ctx, int i, int *num_eats)
 {
 	long	last_eat_time;
 
@@ -52,7 +52,7 @@ static int	is_alive(p_philo *phs, t_ctx *ctx, int i, int *num_eats)
 	return (1);
 }
 
-void	monitor_threads(p_philo *phs, t_ctx *ctx)
+void	monitor_threads(t_philo *phs, t_ctx *ctx)
 {
 	int	i;
 	int	full_eat;

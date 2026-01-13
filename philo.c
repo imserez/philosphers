@@ -6,7 +6,7 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:46:48 by serez             #+#    #+#             */
-/*   Updated: 2026/01/13 10:46:50 by serez            ###   ########.fr       */
+/*   Updated: 2026/01/13 10:59:24 by serez            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ long	get_timestamp(void)
 	return (mstime);
 }
 
-int	safe_print(p_philo *ph, char *msg)
+int	safe_print(t_philo *ph, char *msg)
 {
 	long	time;
 	int		stop;
@@ -44,7 +44,7 @@ int	safe_print(p_philo *ph, char *msg)
 	return (stop);
 }
 
-void	join_threads(p_philo *phs, int num)
+void	join_threads(t_philo *phs, int num)
 {
 	while (num > 0)
 	{
@@ -57,7 +57,7 @@ int	main(int argc, char **argv)
 {
 	t_ctx				*ctx;
 	pthread_mutex_t		*forks;
-	p_philo				*ph;
+	t_philo				*ph;
 
 	ctx = init_context(argc, argv);
 	if (!ctx)

@@ -6,13 +6,13 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:14:33 by serez             #+#    #+#             */
-/*   Updated: 2026/01/13 10:33:58 by serez            ###   ########.fr       */
+/*   Updated: 2026/01/13 10:58:08 by serez            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	free_all(t_ctx **ctx, pthread_mutex_t **forks, p_philo **ph)
+int	free_all(t_ctx **ctx, pthread_mutex_t **forks, t_philo **ph)
 {
 	(*ctx)->finish_simulation = 1;
 	free_forks(forks, (*ctx)->philos);
@@ -21,7 +21,7 @@ int	free_all(t_ctx **ctx, pthread_mutex_t **forks, p_philo **ph)
 	return (1);
 }
 
-int	free_philos(p_philo **ph, int size, int mutex)
+int	free_philos(t_philo **ph, int size, int mutex)
 {
 	int	i;
 
