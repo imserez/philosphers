@@ -6,7 +6,7 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:14:33 by serez             #+#    #+#             */
-/*   Updated: 2026/01/13 10:58:08 by serez            ###   ########.fr       */
+/*   Updated: 2026/01/13 17:08:05 by sjuarez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	free_philos(t_philo **ph, int size, int mutex)
 		else if (i != size - 1)
 			pthread_mutex_destroy(&(*ph)[i].ph_data_tx);
 	}
+	free(*ph);
+	*ph = NULL;
 	return (1);
 }
 
