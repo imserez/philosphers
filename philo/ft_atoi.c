@@ -6,7 +6,7 @@
 /*   By: sjuarez <sjuarez@student.42.barcelona>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:48:50 by sjuarez           #+#    #+#             */
-/*   Updated: 2026/01/14 10:55:22 by serez            ###   ########.fr       */
+/*   Updated: 2026/01/14 15:35:15 by serez            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	ft_atoi(const char *nptr)
 {
 	long	result;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (nptr[i] && (nptr[i] == ' ' || (nptr[i] >= '\t' && nptr[i] <= '\r')))

@@ -1,23 +1,27 @@
-CFLAGS= -Wall -Werror -Wextra
-CC= cc
-NAME=philo
-SRCS= ft_atoi.c ft_utils.c threads_monitor.c philo.c threads_routine.c free_memory.c init_philo.c parse_input.c threads_utils.c
-OBJS= $(SRCS:.c=.o)
-HEADER= philo.h
+CFLAGS		:= -Wall -Werror -Wextra -MMD -MP
+CC		:= cc
+NAME		:= philo
+BUILD_DIR	:= build
+SRCS		:= ft_atoi.c ft_utils.c threads_monitor.c philo.c threads_routine.c free_memory.c init_philo.c parse_input.c threads_utils.c
+OBJS		:= $(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
+DEPS 		:= $(OBJS:.o=.d)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.c $(HEADER)
+$(BUILD_DIR)/%.o: %.c Makefile
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(BUILD_DIR)
 
 fclean: clean
 	rm -f $(NAME)
+
+-include $(DEPS)
 
 re: fclean all
 .PHONY: all clean fclean re
