@@ -6,7 +6,7 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:43:11 by serez             #+#    #+#             */
-/*   Updated: 2026/01/13 10:43:12 by serez            ###   ########.fr       */
+/*   Updated: 2026/01/14 11:04:24 by serez            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_ctx	*init_context(int argc, char **argv)
 
 int	validate_input(t_ctx *ctx, int argc)
 {
-	if (ctx->ttd < 0 || ctx->tte < 0 || ctx->tts < 0)
+	if (ctx->philos < 1 || ctx->ttd < 0 || ctx->tte < 0 || ctx->tts < 0)
 	{
 		write(1, "Parameters must be positive\n", 28);
 		return (0);
