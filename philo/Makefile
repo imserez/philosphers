@@ -1,5 +1,5 @@
-CFLAGS		:= -Wall -Werror -Wextra -MMD -MP
-CC		:= cc
+CFLAGS		:= -Wall -Werror -Wextra -MMD -pthread
+CC			:= cc
 NAME		:= philo
 BUILD_DIR	:= build
 SRCS		:= ft_atoi.c ft_utils.c threads_monitor.c philo.c threads_routine.c free_memory.c init_philo.c parse_input.c threads_utils.c
