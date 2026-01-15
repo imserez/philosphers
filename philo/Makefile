@@ -11,6 +11,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
+-include $(DEPS)
+
 $(BUILD_DIR)/%.o: %.c Makefile
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -20,8 +22,6 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-
--include $(DEPS)
 
 re: fclean all
 .PHONY: all clean fclean re

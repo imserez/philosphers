@@ -6,7 +6,7 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:48:59 by serez             #+#    #+#             */
-/*   Updated: 2026/01/13 10:59:17 by serez            ###   ########.fr       */
+/*   Updated: 2026/01/15 19:24:36 by sjuarez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ static int	is_alive(t_philo *phs, t_ctx *ctx, int i, int *num_eats)
 	pthread_mutex_lock(&phs[i].ph_data_tx);
 	last_eat_time = phs[i].eat_time;
 	*num_eats = phs[i].num_eats;
-	pthread_mutex_unlock(&phs[i].ph_data_tx);
-	if (get_timestamp() - last_eat_time > ctx->ttd)
+	if (get_timestamp() - last_eat_time >= ctx->ttd)
 	{
 		safe_dead_print(&phs[i], "died");
 		stop_sim(ctx);
+		pthread_mutex_unlock(&phs[i].ph_data_tx);
 		return (0);
 	}
+	pthread_mutex_unlock(&phs[i].ph_data_tx);
 	return (1);
 }
 
@@ -74,6 +75,6 @@ void	monitor_threads(t_philo *phs, t_ctx *ctx)
 			stop_sim(ctx);
 			return ;
 		}
-		usleep(1000);
+		usleep(500);
 	}
 }

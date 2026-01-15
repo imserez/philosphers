@@ -6,7 +6,7 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:39:03 by serez             #+#    #+#             */
-/*   Updated: 2026/01/13 11:00:07 by serez            ###   ########.fr       */
+/*   Updated: 2026/01/15 19:28:26 by sjuarez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	philo_init_pipeline(int i, t_ctx *ctx, t_philo **ph,
 				pthread_mutex_t *forks)
 {
-	int				created;
 	pthread_mutex_t	*tmp;
 
 	(*ph)[i].fork1 = &forks[i];
@@ -23,15 +22,13 @@ static int	philo_init_pipeline(int i, t_ctx *ctx, t_philo **ph,
 		(*ph)[i].fork2 = &forks[0];
 	else
 		(*ph)[i].fork2 = &forks[i + 1];
-	if (i % 2 == 0)
+	if (i % 2 == 1)
 	{
 		tmp = (*ph)[i].fork1;
 		(*ph)[i].fork1 = (*ph)[i].fork2;
 		(*ph)[i].fork2 = tmp;
 	}
-	created = pthread_create(&((*ph)[i]).pth_id, NULL,
-			philo_routine, &((*ph)[i]));
-	return (!created);
+	return (1);
 }
 
 int	init_threads(t_ctx *ctx, t_philo **ph, pthread_mutex_t *forks)
@@ -67,6 +64,24 @@ int	init_forks(t_ctx *ctx, pthread_mutex_t **forks)
 	return (1);
 }
 
+static int	launch_threads(t_ctx *ctx, t_philo **ph)
+{
+	int	created;
+	int	i;
+
+	i = -1;
+	ctx->begin_time = get_timestamp();
+	while (++i < ctx->philos)
+	{
+		(*ph)[i].begin = ctx->begin_time;
+		created = pthread_create(&((*ph)[i]).pth_id, NULL,
+				philo_routine, &((*ph)[i]));
+		if (created != 0)
+			return (free_philos(ph, i, 0), 0);
+	}
+	return (1);
+}
+
 int	init_philo_data(t_ctx *ctx, t_philo **ph, pthread_mutex_t *forks)
 {
 	int	i;
@@ -78,7 +93,6 @@ int	init_philo_data(t_ctx *ctx, t_philo **ph, pthread_mutex_t *forks)
 		(*ph)[i].sleep_ms = ctx->tts;
 		(*ph)[i].eat_ms = ctx->tte;
 		(*ph)[i].eat_time = get_timestamp();
-		(*ph)[i].begin = ctx->begin_time;
 		(*ph)[i].ph_num = i;
 		(*ph)[i].philos = ctx->philos;
 		(*ph)[i].die_ms = ctx->ttd;
@@ -88,8 +102,7 @@ int	init_philo_data(t_ctx *ctx, t_philo **ph, pthread_mutex_t *forks)
 		(*ph)[i].finish_simulation = &ctx->finish_simulation;
 		if (pthread_mutex_init(&((*ph)[i].ph_data_tx), NULL) != 0)
 			return (free_philos(ph, i, 1));
-		if (!philo_init_pipeline(i, ctx, ph, forks))
-			return (free_philos(ph, i, 0));
+		philo_init_pipeline(i, ctx, ph, forks);
 	}
-	return (1);
+	return (launch_threads(ctx, ph));
 }

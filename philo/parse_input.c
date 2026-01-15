@@ -6,7 +6,7 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:43:11 by serez             #+#    #+#             */
-/*   Updated: 2026/01/15 17:26:08 by sjuarez          ###   ########.fr       */
+/*   Updated: 2026/01/15 18:02:18 by sjuarez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ t_ctx	*init_context(int argc, char **argv)
 
 int	validate_input(t_ctx *ctx, int argc)
 {
-	if (ctx->philos < 1 || ctx->ttd < 0 || ctx->tte < 0 || ctx->tts < 0)
+	if (ctx->philos < 1 || ctx->ttd < 1 || ctx->tte < 1 || ctx->tts < 1)
 	{
 		write(1, "Invalid parameters. Must be positive.\n", 39);
 		return (0);
 	}
-	if (argc == 6 && ctx->eat_times < 1)
+	if (argc == 6 && ctx->eat_times < 0)
 	{
 		write(1, "Invalid parameters. Must be positive.\n", 39);
 		return (0);

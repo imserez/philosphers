@@ -6,7 +6,7 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:46:48 by serez             #+#    #+#             */
-/*   Updated: 2026/01/15 17:19:39 by sjuarez          ###   ########.fr       */
+/*   Updated: 2026/01/15 18:22:42 by sjuarez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int argc, char **argv)
 	ctx = init_context(argc, argv);
 	if (!ctx)
 		return (1);
-	if (!validate_input(ctx, argc))
+	if (!validate_input(ctx, argc) || ctx->eat_times == 0)
 		return (free_ctx(&ctx));
 	ctx->begin_time = get_timestamp();
 	if (!init_forks(ctx, &forks))

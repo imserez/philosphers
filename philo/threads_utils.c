@@ -6,7 +6,7 @@
 /*   By: serez <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:53:50 by serez             #+#    #+#             */
-/*   Updated: 2026/01/15 17:19:26 by sjuarez          ###   ########.fr       */
+/*   Updated: 2026/01/15 19:23:16 by sjuarez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,7 @@ int	sim_finished(t_philo *ph)
 
 void	safe_gap(t_philo *ph)
 {
-	long	think_time;
-
-	think_time = ph->eat_ms * 2 - ph->sleep_ms;
-	if (think_time < 0)
-		think_time = 0;
-	ft_usleep(think_time * 0.4, ph);
+	ft_usleep(30, ph);
 }
 
 int	ft_usleep(size_t milliseconds, t_philo *ph)
