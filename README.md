@@ -8,9 +8,7 @@
 
 **Philosophers** is a simulation of the classic "Dining Philosophers" problem, a foundational concept in computer science used to illustrate synchronization issues in concurrent algorithm design.
 
-
-
-From a **Systems Engineering** perspective, this project is a practical implementation of **Multithreading** and **Mutual Exclusion (Mutex)**. The challenge is to manage a group of threads (philosophers) competing for a limited set of shared resources (forks), ensuring that:
+This project is a practical implementation of **Multithreading** and **Mutual Exclusion (Mutex)**. The challenge is to manage a group of threads (philosophers) competing for a limited set of shared resources (forks), ensuring that:
 
 1.  **No Deadlocks:** The system never reaches a state where processes wait indefinitely for each other.
 2.  **No Starvation:** Every thread gets a chance to access the critical section (eat).
