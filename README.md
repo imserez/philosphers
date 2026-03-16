@@ -4,7 +4,7 @@
 ![System](https://img.shields.io/badge/System-Unix%2FLinux-lightgrey.svg)
 ![Topic](https://img.shields.io/badge/Topic-Concurrency_%26_Threads-orange.svg)
 
-## 📖 Overview
+## Overview
 
 **Philosophers** is a simulation of the classic "Dining Philosophers" problem, a foundational concept in computer science used to illustrate synchronization issues in concurrent algorithm design.
 
@@ -14,7 +14,7 @@ This project is a practical implementation of **Multithreading** and **Mutual Ex
 2.  **No Starvation:** Every thread gets a chance to access the critical section (eat).
 3.  **Data Integrity:** Simultaneous access to shared memory does not result in race conditions.
 
-## 🛠 Technical Concepts
+## Technical Concepts
 
 This project relies on the `pthread` library to manipulate the kernel's thread scheduling and synchronization primitives:
 
@@ -23,7 +23,7 @@ This project relies on the `pthread` library to manipulate the kernel's thread s
 * **Race Conditions:** Rigorously identified and prevented. Since threads run asynchronously, reading/writing variable states (like `last_meal_time` or `is_dead`) without locks leads to undefined behavior.
 * **Context Switching & Timing:** Managing high-precision timing (`gettimeofday`) to monitor process states in the microsecond range, dealing with the non-deterministic nature of the OS scheduler.
 
-## 🔄 Thread Architecture
+## Thread Architecture
 
 The simulation operates on a cyclical state machine for each thread:
 
@@ -36,7 +36,7 @@ The simulation operates on a cyclical state machine for each thread:
 4.  **Sleeping (Release):** The thread unlocks both mutexes, making resources available for neighbors, and sleeps for `time_to_sleep`.
 5.  **Monitoring (The Reaper):** A separate observer loop checks if any thread has exceeded `time_to_die` without entering the eating state.
 
-## 🚀 Usage
+## Usage
 
 ### Prototype
 The program requires specific timing arguments (in milliseconds):
@@ -76,16 +76,16 @@ make
 ./philo 4 310 200 100
 ```
 
-## 📋 Error Handling & Edge Cases
+## Error Handling & Edge Cases
 
 The implementation accounts for system instability and logical pitfalls:
 * **Single Philosopher:** Handled as a special case. With only one fork available, the thread cannot eat and will die after `time_to_die` (simulating deadlock on resource dependency).
 * **Input Validation:** Rigorous parsing of arguments to reject non-numeric or negative values.
 * **Resource Cleanup:** Ensures all mutexes are destroyed and heap memory freed upon termination to prevent memory leaks.
 
-## 👨‍💻 Author
+## Author
 
-**Sergi Juarez** *Systems Software Engineer | RISC-V & Kernel Enthusiast*
+**Sergi Juarez**
 
 - **GitHub:** [imserez](https://github.com/imserez)
 - **LinkedIn:** [sergijuarez](https://www.linkedin.com/in/sergijuarez)
